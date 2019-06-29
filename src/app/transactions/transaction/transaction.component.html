@@ -1,0 +1,43 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ type }} 
+        <span *ngIf="transactions.controls.length === 1">
+          <span *ngIf="type === 'Deposit'">to</span>
+          <span *ngIf="type === 'Withdraw'">from</span>
+          {{ transactions.at(0).getRawValue().accountName }}
+        </span>
+      </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form class="form-group" [formGroup]="transactionForm" novalidate>
+      <div class="d-flex flex-wrap" formArrayName="transactions">
+        <div [ngClass]="{ 'w-25' : transactions.controls.length > 1, 'w-100': transactions.controls.length === 1 }" *ngFor="let transaction of transactions.controls; let i = index" [formGroupName]="i">
+            <div class="modal-body">
+                <h5 *ngIf="transactions.controls.length > 1">
+                  {{ transaction.getRawValue().accountName }}
+                  <i class="fa fa-times text-danger float-right"
+                     (click)="transactions.removeAt(i)"></i>
+                </h5>
+                <label for="amount">Amount</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input [ngClass]="{ 'is-invalid': !this.transaction.valid && this.transaction.touched }"type="number" formControlName="amount" id="amount" class="form-control is-invalid" placeholder="0" required>
+                  <div *ngIf="!this.transaction.valid && this.transaction.touched" class="invalid-feedback">
+                      Please choose an amount.
+                  </div>
+                </div>
+                <label for="description">Description</label>
+                <input type="text" formControlName="description" id="description" class="form-control" placeholder="Description">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-success" (click)="createTransaction()">Save</button>
+      </div>
+    </form>
+  </ng-template>

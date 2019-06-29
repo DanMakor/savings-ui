@@ -1,0 +1,43 @@
+<div routerLink="/accounts" class="btn btn-outline-secondary">Back</div>
+  
+<div class="mt-2 d-flex align-items-center">
+    <h1 class="mb-0">{{ accountDetailsForm.value.name }}</h1>
+    <div *ngIf="mode === 'View'" (click)="editMode()" class="ml-3 btn btn-warning">Edit</div>
+    <div *ngIf="mode === 'Edit'" (click)="viewMode()" class="ml-3 btn btn-warning">Cancel</div>
+    <div *ngIf="mode === 'Edit'" (click)="deleteAccount()" class="btn btn-danger ml-2">Delete</div>
+    <div *ngIf="mode === 'Edit'" (click)="updateAccount()" class="btn btn-success ml-2">Update</div>
+    <div *ngIf="mode === 'Create'" (click)="addAccount()" class="btn btn-success mt-3">Add</div>
+</div>
+
+<form [formGroup]="accountDetailsForm">
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <input type="text" formControlName="name" class="form-control" placeholder="Name" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    <div class="col-md-6">
+      <input type="text" formControlName="icon" class="form-control" placeholder="Icon class" aria-label="Username" aria-describedby="basic-addon1">    
+    </div>
+    </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <textarea formControlName="description" placeholder="Description" class="form-control" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+    </div>
+  </div>
+</form>
+
+<div class="row mt-3">
+  <div class="col-md-12">
+      <div 
+      [ngClass]="{ 'border-bottom-0': i === transactions.length - 1}"
+      class="d-flex border-bottom pt-2 pb-2 align-items-center" 
+      *ngFor="let transaction of transactions; let i = index">
+      <span *ngIf="transaction.amount > 0"><i class="fa fa-arrow-up text-success"></i><span class="font-small ml-2">{{ transaction.amount | currency }}</span></span>
+      <span *ngIf="transaction.amount < 0"><i class="fa fa-arrow-down text-danger"></i><span class="font-small ml-2">{{ -transaction.amount | currency }}</span></span>
+      <span class="ml-4 font-weight-light">{{ transaction.description }}</span>
+      <span class="ml-auto font-small">
+        {{ transaction.date | date:'dd/MM/yyyy' }}
+        <i *ngIf="mode === 'Edit'" (click)="deleteTransaction(transaction._id)" class="clickable fa fa-times ml-1 text-danger"></i>
+      </span>
+  </div>
+</div>
+
