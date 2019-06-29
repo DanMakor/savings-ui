@@ -65,12 +65,11 @@ export class TransactionComponent implements OnInit {
         transactionForSaving.date = new Date();
         transactionsForSaving.push(transactionForSaving);
       })
-      console.log('error');
       this.transactionService.createMultiple(transactionsForSaving)
         .subscribe(() => {
           this.transactionForm.reset();
           this.modalService.dismissAll();
-        }, (err) => { console.log(err); }
+        }
       )
     } else {
       this.transactions.controls.forEach(ctrl => {

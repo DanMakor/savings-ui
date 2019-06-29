@@ -76,8 +76,6 @@ export class AccountDetailsComponent implements OnInit {
 
   private getTransactions() {
     this.transactionSubscription = this.transactionService.transactions$.subscribe(transactions => {
-      console.log(transactions);
-      console.log(this.id);
       this.transactions = transactions.filter(trans => trans.accountId == this.id);
     });
   }
