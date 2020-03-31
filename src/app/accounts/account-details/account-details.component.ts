@@ -30,11 +30,11 @@ export class AccountDetailsComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     
-
     this.accountDetailsForm = this.fb.group({
       'name': ['', Validators.required],
       'description': ['', Validators.required],
-      'icon': ['']
+      'icon': [''],
+      'defaultDeposit': ['']
     })
 
     if (this.id) {
@@ -70,7 +70,7 @@ export class AccountDetailsComponent implements OnInit {
 
   private getAccount(id: string) {
     this.accountService.get(id).subscribe((acc) => {
-      this.accountDetailsForm.patchValue({ 'name': acc.name, 'description': acc.description, 'icon': acc.icon})
+      this.accountDetailsForm.patchValue(acc)
     })
   }
 

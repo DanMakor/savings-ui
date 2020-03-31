@@ -40,7 +40,7 @@ export class TransactionComponent implements OnInit {
           'transactionType': [config.type],
           'accountName': [{ value: acc.name, disabled: true }],
           'accountId': [acc._id],
-          'amount': [null, Validators.required],
+          'amount': [acc.defaultDeposit, Validators.required],
           'description': [null]
         }));
       });
