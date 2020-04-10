@@ -31,6 +31,4 @@ export class AccountService {
   delete(id: string): Observable<any> {
     return this.http.delete(url + '/delete/' + id);
   }
-
-
 }

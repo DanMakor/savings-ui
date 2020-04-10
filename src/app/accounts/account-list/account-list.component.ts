@@ -28,8 +28,9 @@ export class AccountListComponent implements OnInit {
       this.transactionSub = this.transactionService.transactions$.subscribe(transactions => {
         this.accountsTotal = transactions.reduce((a,b) => a + b.amount, 0);
         this.accounts = accounts.map(acc => {
-          acc.transactions = transactions.filter(t => t.accountId === acc._id).slice(0, 10);
-          acc.total = acc.transactions.reduce((a,b) => a + b.amount, 0);
+          const allTransactions = transactions.filter(t => t.accountId === acc._id);
+          acc.transactions = allTransactions.slice(0, 10);
+          acc.total = allTransactions.reduce((a,b) => a + b.amount, 0);
           return acc;
         })
       })
